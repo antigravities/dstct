@@ -1,3 +1,8 @@
+// DSTCT
+// Copyright (C) 2015 Miss Sweeti.
+// Not affiliated with Klei, so don't ask them for help
+// See LICENSE file for more information.
+
 var http = require("http");
 var cheerio = require("cheerio");
 var request = require("request");
