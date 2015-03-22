@@ -1,0 +1,58 @@
+<html>
+  <head>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript">
+      function doDSTsetup(){
+        $.ajax("/w/" + $("#workshopid").val()).done(function(d){
+          if( ! typeof d == 'object' ) d=JSON.parse(d);
+
+          var modsettings = "";
+          d.forEach(function(v,k){
+            modsettings+="ForceEnableMod(\"workshop-" + v + "\")\n";
+          });
+
+          $("#modsettings").val(modsettings);
+          $("#modsetup").val("ServerModCollectionSetup(\"" + $("#workshopid").val() + "\")");
+        }).fail(function(e){
+          $("#error").text(e.responseText);
+        });
+      }
+    </script>
+    <title>
+      Don't Starve Together Dedicated Server Mod Setup
+    </title>
+  </head>
+  <body style="font-family: 'Helvetica';">
+    <h1>Don't Starve Together Dedicated Server Mod Setup</h1>
+    This tool was created to help automate the configuration and enabling of Workshop collections for Don't Starve Together dedicated servers because you have to force-enable them (usually, you'd enable mods in the game menu, but there is no menu...), writing the files by hand is a tedious task, and I'm lazy &macr;\_(&#12484;)_/&macr;<br>
+    This tool was <b>not</b> created by Klei, so you probably shouldn't bother them about it. Instead, you should annoy <a href="http://steamcommunity.com/id/MissSweeti">Miss Sweeti</a>.<br><br>
+
+    <div style="color: red;" id="error"></div>
+
+    1. Enter the ID of your Workshop collection. (e.g. for http://steamcommunity.com/sharedfiles/filedetails/?id=411370615 you would fill in 411370615 here.)<br>
+    <input type="text" id="workshopid"></input><br><br>
+
+    2. Click this shiny link: <a href="#" onClick="javascript:doDSTsetup()">Generate</a><br><br>
+
+    3. Copy what's in the following textarea into your mods/modsettings.lua:<br>
+
+    <textarea id="modsettings" style="width: 500px; height: 300px;"></textarea><br><br>
+
+    4. And then this into mods/dedicated_server_mods_setup.lua:<br>
+    <textarea id="modsetup" style="width: 500px; height: 300px;"></textarea><br><br>
+
+    5. Profit!<br><br>
+    <hr>
+    <h2>Technical stuff (aka how this works)</h2>
+    This site runs on a Node.js backend which accepts API requests to /w/&lt;WORKSHOPID&gt;. It first checks to make sure that the workshop ID is actually a DST collection:<br>
+    <ul>
+      <li>It's not blank</li>
+      <li>It's an integer</li>
+      <li>It's greater/later than ID 300000000 (a screenshot created in August 2014)</li>
+      <li>It's for Don't Starve Together (checked with Steam's breadcrumb)</li>
+      <li>It's a Collection (checked, again, with Steam's breadcrumb)</li>
+    </ul>
+    It then uses <code>cheerio</code> to read all of the addons in the collection and get their IDs. Finally, it returns a nice JSON-array of Workshop IDs.<br><br>
+    The source is <a href="https://github.com/TDLive/DSTServerModSetup">on GitHub</a>. Feel free to file a bug there if something breaks. :)
+  </body>
+</html>

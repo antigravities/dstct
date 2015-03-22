@@ -1,0 +1,10 @@
+{
+  "name": "dstservermodsetup",
+  "version": "0.0.1",
+  "repository": "https://github.com/TDLive/DSTServerModSetup.git",
+  "author": "tdlive aw'sum",
+  "dependencies": {
+    "cheerio": "~0.19.0",
+    "request": "~2.53.0"
+  }
+}
