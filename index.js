@@ -55,7 +55,7 @@ http.createServer(function(req,res){
       $ = cheerio.load(b);
 
       // let's make sure this is for Don't Starve Together
-      if( $(".breadcrumbs").children("a")[0].children[0].data != "Don't Starve Together Beta" ) return reject(res, "item not for Don't Starve Together");
+      if( $(".breadcrumbs").children("a")[0].children[0].data != "Don't Starve Together" ) return reject(res, "item not for Don't Starve Together");
 
       // let's make sure this is a collection
       if( $(".breadcrumbs").children("a")[2].children[0].data != "Collections" ) return reject(res, "not a Collection");
